@@ -17,11 +17,11 @@ Question -> Danger check -> reviewed emergency card + 112
 ```
 
 ## Current step
-Phase 0: agree on the safety rules in [docs/safety-policy.md](docs/safety-policy.md), find a medical or emergency
-reviewer, and check content rights.
+Phase 0 is still open: the safety rules in [docs/safety-policy.md](docs/safety-policy.md) need expert review, and we
+still need a reviewer and content rights.
 
-Next is Phase 1: test whether Kumru-2B can simplify Turkish passages without changing their meaning. That test decides
-whether the app uses Kumru, tries a backup model, or stays search-only.
+Phase 1 tested whether Kumru-2B can simplify Turkish passages without changing their meaning, and
+[it failed](docs/decisions/001-phase1-kumru-writer.md). What Kumru does next is awaiting a decision.
 
 ## Release rule
 No public release without expert review of the content, a passing safety evaluation, and legal review.
