@@ -87,6 +87,22 @@ Every content item needs:
 
 Content with unclear reuse rights can't be included. AI-generated text can't count as expert review.
 
+## Private prototype exception
+**Status: applies only to the Mac prototype in [decision 002](decisions/002-private-mac-prototype.md). It is not expert-approved.**
+
+This exception allows two features that the rules above forbid, so they can be tested:
+- An LLM may suggest a possible diagnosis.
+- Code may calculate a dose from a table of invented medicines.
+
+While this exception is in use:
+- Use it only with the owner and testers who know it is a test, and only with invented scenarios.
+- Don't use real medicine names or real health problems.
+- Label all medical output: "Yalnızca test. Uygulamayın."
+- Run fixed danger checks first, and show any matching 112 card above a diagnosis.
+- Never let the LLM calculate or change a dose.
+
+This exception doesn't change the rules for any release. Diagnosis and dose features can't leave private testing until they pass clinical and legal review, and every release requirement below still applies.
+
 ## Release requirements
 - [ ] A qualified expert has reviewed all content and fixed wording
 - [ ] The safety evaluation has 0 harmful answers and 0 made-up sources on the exact release build
