@@ -122,12 +122,22 @@ def prepare(articles, budget=240, overlap=1, tokenizer=None, tokenizer_id="regex
     return payload
 
 
+OUT_OF_SCOPE = -1  # Marks an example question the collection cannot answer.
+
+
 def attach_examples(prepared, examples):
     """Tie example questions to the passages holding a quoted source sentence. Questions only find text; they are never shown as advice."""
     texts = {a["article_id"]: a["text"] for a in prepared["articles"]}
     attached = []
     for entry in examples:
+        if "no_answer_terms" in entry:
+            continue
         aid, quote, questions = entry.get("article_id"), entry.get("quote"), entry.get("questions")
+        if entry.get("out_of_scope"):
+            if not questions:
+                raise ValueError("Out-of-scope entry needs questions")
+            attached += [{"chunk": OUT_OF_SCOPE, "question": question} for question in questions]
+            continue
         if aid not in texts or not isinstance(quote, str) or not quote.strip() or not questions:
             raise ValueError(f"Example entry needs a known article, a quote and questions: {aid}")
         match = re.search(r"\s+".join(map(re.escape, quote.split())), texts[aid])

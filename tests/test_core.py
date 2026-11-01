@@ -7,6 +7,7 @@ import pytest
 from turkish_search.data import prepare, fingerprint, validate_articles
 from turkish_search.text import analyze
 from turkish_search.search import BM25, Searcher, build_index, fuse
+from turkish_search.cli import main
 from turkish_search.evaluation import validate_queries, score_query, ndcg, evaluate, compare
 
 
@@ -115,6 +116,25 @@ def test_example_question_finds_its_passage_without_changing_shown_text(tmp_path
     with pytest.raises(ValueError, match="not found"):
         build_index(p, tmp_path / "bad", e, examples=[{"article_id": "b", "quote": "olmayan cümle", "questions": ["x"]}])
     assert not (tmp_path / "bad").exists()
+
+
+def test_no_answer_check(tmp_path):
+    e = FakeEncoder()
+    examples = [{"out_of_scope": True, "questions": ["üye üye"]}, {"no_answer_terms": ["Doğum"]}]
+    build_index(prepare(ARTICLES[1:]), tmp_path / "idx", e, examples=examples)
+    s = Searcher(tmp_path / "idx", e)
+    out = s.search("üye", "dense")  # Nearest to the out-of-scope question, not to any passage.
+    assert not out["accepted"] and out["excerpts"] == [] and "out-of-scope" in out["no_answer"]
+    assert s.search("kitap", "dense")["accepted"]
+    for query in ("Doğumu başladı", "dogumu basladi"):  # Suffixes and missing Turkish letters still match.
+        assert "no content" in s.search(query, "bm25")["no_answer"]
+    assert s.search("kitap", "bm25")["accepted"]
+
+
+def test_query_without_words_runs_through_the_cli(capsys, tmp_path):
+    build_index(prepare(ARTICLES), tmp_path / "idx")
+    assert main(["search", "--index", str(tmp_path / "idx"), "--method", "bm25", "!!!"]) == 0
+    assert "bulunamadı" in capsys.readouterr().out
 
 
 def questions():

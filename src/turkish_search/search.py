@@ -8,7 +8,7 @@ import sqlite3
 import tempfile
 import time
 import numpy as np
-from .data import attach_examples, fingerprint, save_json
+from .data import OUT_OF_SCOPE, attach_examples, fingerprint, save_json
 from .text import analyze
 
 EXCERPTS_PER_ARTICLE = 2
@@ -43,6 +43,7 @@ def build_index(prepared, destination, encoder=None, stem=False, ascii_fold=Fals
     if destination.exists():
         raise ValueError("Index already exists; choose a new directory for each experiment")
     attached = attach_examples(prepared, examples or [])
+    terms = [analyze(t, ascii_fold=True)[0] for e in examples or [] for t in e.get("no_answer_terms", [])]
     destination.parent.mkdir(parents=True, exist_ok=True)
     temporary = Path(tempfile.mkdtemp(prefix=".index-", dir=destination.parent))
     try:
@@ -59,7 +60,8 @@ def build_index(prepared, destination, encoder=None, stem=False, ascii_fold=Fals
         manifest = {"schema": 1, "corpus_fingerprint": expected, "chunking": prepared["config"],
                     "articles": len(prepared["articles"]), "passages": len(prepared["chunks"]),
                     "stem": stem, "ascii_fold": ascii_fold, "model": None,
-                    "examples": len(attached), "examples_fingerprint": fingerprint(attached)}
+                    "examples": len(attached), "examples_fingerprint": fingerprint(attached),
+                    "no_answer_terms": terms}
         if encoder is not None:
             vectors = encoder.encode([c["embedding_text"] for c in prepared["chunks"]], "passage")
             if vectors.ndim != 2 or vectors.shape[0] != len(prepared["chunks"]) or not np.isfinite(vectors).all():
@@ -97,6 +99,11 @@ def fuse(dense_order, lexical_order, limit=50, constant=60):
     return sorted(scores, key=lambda i: (-scores[i], i)), scores
 
 
+def no_answer(reason, start):
+    return {"accepted": False, "articles": [], "excerpts": [], "passages": [], "no_answer": reason,
+            "latency_ms": (time.perf_counter() - start) * 1000}
+
+
 class Searcher:
     def __init__(self, directory, encoder=None):
         start = time.perf_counter()
@@ -119,7 +126,8 @@ class Searcher:
                 self.example_vectors = np.load(self.directory / "example_vectors.npy", mmap_mode="r", allow_pickle=False)
         lexical = [c["embedding_text"] for c in self.chunks]
         for chunk, question in self.examples:
-            lexical[chunk] += "\n" + question
+            if chunk != OUT_OF_SCOPE:
+                lexical[chunk] += "\n" + question
         self.bm25 = BM25([analyze(t, self.manifest["stem"], self.manifest["ascii_fold"]) for t in lexical],
                          self.manifest["stem"], self.manifest["ascii_fold"])
         self.load_ms = (time.perf_counter() - start) * 1000
@@ -132,8 +140,13 @@ class Searcher:
         if min_dense_score is not None and (method == "bm25" or not -1 <= min_dense_score <= 1):
             raise ValueError("min_dense_score requires dense/hybrid and a value in [-1,1]")
         start = time.perf_counter()
-        if not analyze(query):
-            return {"accepted": False, "articles": [], "passages": [], "latency_ms": 0.0}
+        words = analyze(query, ascii_fold=True)
+        if not words:
+            return no_answer("no searchable words", start)
+        # ponytail: prefix match suits Turkish suffixes; a term also blocks answerable uses, such as "doğumdan sonra emzirme".
+        term = next((t for t in self.manifest.get("no_answer_terms", []) for w in words if w.startswith(t)), None)
+        if term:
+            return no_answer(f"no content on: {term}", start)
         dense = None
         if method != "bm25":
             if self.encoder is None:
@@ -143,10 +156,15 @@ class Searcher:
             matched = {}
             if self.examples:
                 # A passage scores as its own text or its closest example question, whichever is nearer.
+                closest_out_of_scope = -1.0
                 for (chunk, question), score in zip(self.examples, self.example_vectors @ query_vector):
-                    if score > dense[chunk]:
+                    if chunk == OUT_OF_SCOPE:
+                        closest_out_of_scope = max(closest_out_of_scope, float(score))
+                    elif score > dense[chunk]:
                         dense[chunk] = score
                         matched[chunk] = question
+                if closest_out_of_scope > float(dense.max()):
+                    return no_answer("closest to an out-of-scope question", start)
         lexical = self.bm25.score(query) if method != "dense" else None
         if method == "dense":
             ranking, scores = ordered(dense), dense
