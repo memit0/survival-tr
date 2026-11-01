@@ -118,19 +118,6 @@ def test_example_question_finds_its_passage_without_changing_shown_text(tmp_path
     assert not (tmp_path / "bad").exists()
 
 
-def test_no_answer_check(tmp_path):
-    e = FakeEncoder()
-    examples = [{"out_of_scope": True, "questions": ["üye üye"]}, {"no_answer_terms": ["Doğum"]}]
-    build_index(prepare(ARTICLES[1:]), tmp_path / "idx", e, examples=examples)
-    s = Searcher(tmp_path / "idx", e)
-    out = s.search("üye", "dense")  # Nearest to the out-of-scope question, not to any passage.
-    assert not out["accepted"] and out["excerpts"] == [] and "out-of-scope" in out["no_answer"]
-    assert s.search("kitap", "dense")["accepted"]
-    for query in ("Doğumu başladı", "dogumu basladi"):  # Suffixes and missing Turkish letters still match.
-        assert "no content" in s.search(query, "bm25")["no_answer"]
-    assert s.search("kitap", "bm25")["accepted"]
-
-
 def test_query_without_words_runs_through_the_cli(capsys, tmp_path):
     build_index(prepare(ARTICLES), tmp_path / "idx")
     assert main(["search", "--index", str(tmp_path / "idx"), "--method", "bm25", "!!!"]) == 0

@@ -203,7 +203,7 @@ flowchart TD
 
 For example, `kutuphane pazar acik mi` is typed without Turkish letters. In the demo evaluation, dense ranks the correct article 7th and BM25 ranks it 1st, so hybrid also ranks it 1st. The reverse happens too: `Odayı kaç saat ayırtabilirim?` is 3rd in BM25 and 1st in dense and hybrid.
 
-`accepted: true` only means a result survived. It does not mean the answer is correct. An index built with `--examples` can also refuse: when the question contains a listed `no_answer_terms` word or sits closest to an `out_of_scope` example question, search returns `accepted: false` with a `no_answer` reason. This catches listed topics only; other unanswerable questions still get results.
+`accepted: true` only means a result survived. It does not mean the answer is correct, and without a calibrated cutoff, dense and hybrid search return something even for unanswerable questions.
 
 ### Measuring quality
 
