@@ -1,3 +1,0 @@
-# One simplified sentence on one line, with no filler brackets, blanks or bold marks.
-root ::= text "\n"
-text ::= [^\n\[\]*()_]{5,160}

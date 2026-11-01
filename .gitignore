@@ -1,5 +1,12 @@
-*.gguf
+.venv/
 __pycache__/
+*.pyc
+*.egg-info/
 .pytest_cache/
-evals/results/*.tmp
-.local/
+models/
+build/
+indexes/
+reports/
+prepared/
+.env
+.DS_Store

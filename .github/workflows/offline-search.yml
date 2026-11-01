@@ -1,17 +1,10 @@
 name: Offline search tests
-on:
-  push:
-    paths: ['offline-search/**', '.github/workflows/offline-search.yml']
-  pull_request:
-    paths: ['offline-search/**', '.github/workflows/offline-search.yml']
+on: [push, pull_request]
 permissions:
   contents: read
 jobs:
   core:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: offline-search
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -27,4 +20,4 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: offline-search-demo-evaluation
-          path: offline-search/reports/ci/
+          path: reports/ci/
