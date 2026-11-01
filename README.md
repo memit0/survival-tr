@@ -171,7 +171,7 @@ flowchart TD
 
 ### Answering a search
 
-Dense search matches meaning, BM25 matches words, and hybrid combines their rankings. Results are then reduced to one best passage per article.
+Dense search matches meaning, BM25 matches words, and hybrid combines their rankings. Results then show the top articles with up to two passages each, because an article's best-scoring passage can be the wrong section.
 
 ```mermaid
 flowchart TD
@@ -197,7 +197,7 @@ flowchart TD
     RRF --> RANK
 
     RANK --> CUT["Optional --min-dense-score filter<br/>off by default"]
-    CUT --> DEDUP["Keep each article's best passage<br/>return the top 3 articles"]
+    CUT --> DEDUP["Keep up to 2 passages per article<br/>from the top 3 articles"]
     DEDUP --> OUT["Original excerpt, article ID, source, score<br/>accepted: true if anything is left"]
 ```
 

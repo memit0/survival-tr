@@ -122,6 +122,25 @@ def prepare(articles, budget=240, overlap=1, tokenizer=None, tokenizer_id="regex
     return payload
 
 
+def attach_examples(prepared, examples):
+    """Tie example questions to the passages holding a quoted source sentence. Questions only find text; they are never shown as advice."""
+    texts = {a["article_id"]: a["text"] for a in prepared["articles"]}
+    attached = []
+    for entry in examples:
+        aid, quote, questions = entry.get("article_id"), entry.get("quote"), entry.get("questions")
+        if aid not in texts or not isinstance(quote, str) or not quote.strip() or not questions:
+            raise ValueError(f"Example entry needs a known article, a quote and questions: {aid}")
+        match = re.search(r"\s+".join(map(re.escape, quote.split())), texts[aid])
+        if not match:
+            raise ValueError(f"Example quote not found in {aid}: {quote}")
+        positions = [i for i, c in enumerate(prepared["chunks"]) if c["article_id"] == aid and
+                     c["start"] <= match.start() and c["end"] >= match.end()]
+        if not positions:
+            raise ValueError(f"Example quote is split across passages in {aid}: {quote}")
+        attached += [{"chunk": positions[0], "question": question} for question in questions]
+    return attached
+
+
 def save_json(path, value):
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)

@@ -76,6 +76,8 @@ def score_query(row, result):
         if evidence_labeled:
             metrics["passage_success_at_1"] = float(bool(result["articles"]) and passage_answers(result["articles"][0], row["relevant"]))
             metrics["candidate_success_at_20"] = float(any(passage_answers(p, row["relevant"]) for p in result["passages"][:20]))
+            shown = [p for p in result.get("excerpts", result["articles"]) if p["article_id"] in ids[:3]]
+            metrics["evidence_shown"] = float(any(passage_answers(p, row["relevant"]) for p in shown))
     else:
         metrics["false_accept"] = float(result["accepted"])
     return {"qid": row["qid"], "query": row["query"], "group": row.get("group", row["qid"]),

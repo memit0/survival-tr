@@ -91,6 +91,32 @@ def test_dense_exact_and_model_mismatch(tmp_path):
         Searcher(tmp_path / "idx", bad)
 
 
+def test_second_excerpt_is_shown_from_the_same_article(tmp_path):
+    text = " ".join(f"Kitap kuralı {i} burada yazılıdır." for i in range(30))
+    build_index(prepare([{"article_id": "a", "title": "Kitap", "text": text}, *ARTICLES[1:]], budget=24, overlap=0), tmp_path / "idx")
+    result = Searcher(tmp_path / "idx").search("kitap", "bm25", top_k=2)
+    assert len({r["article_id"] for r in result["articles"]}) == len(result["articles"])
+    counts = [r["article_id"] for r in result["excerpts"]]
+    assert counts.count("a") == 2 and set(counts) == {"a", "b"}
+
+
+def test_example_question_finds_its_passage_without_changing_shown_text(tmp_path):
+    e = FakeEncoder()
+    examples = [{"article_id": "b", "quote": "Geciken kitaplar", "questions": ["üye iade soruyor"]}]
+    p = prepare(ARTICLES)
+    build_index(p, tmp_path / "idx", e, examples=examples)
+    s = Searcher(tmp_path / "idx", e)
+    articles = s.search("üye", "dense")["articles"]
+    hit = next(a for a in articles if a["article_id"] == "b")
+    assert hit["matched_question"] == "üye iade soruyor"
+    assert hit["dense_score"] == pytest.approx(articles[0]["dense_score"])  # Lifted level with the true "üye" passage.
+    assert "üye" not in hit["text"].lower()  # The question finds text; it is never displayed as content.
+    assert s.search("iade soruyor", "bm25")["articles"][0]["article_id"] == "b"
+    with pytest.raises(ValueError, match="not found"):
+        build_index(p, tmp_path / "bad", e, examples=[{"article_id": "b", "quote": "olmayan cümle", "questions": ["x"]}])
+    assert not (tmp_path / "bad").exists()
+
+
 def questions():
     return [{"qid": "q1", "query": "Üyelik ücretsiz mi?", "group": "membership", "split": "dev", "answerable": True,
              "relevant": [{"article_id": "a", "grade": 2, "evidence": [{"start": 9, "end": 25}]}]},

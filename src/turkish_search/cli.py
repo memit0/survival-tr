@@ -38,6 +38,7 @@ def make_parser():
     idx.add_argument("--lexical-only", action="store_true")
     idx.add_argument("--stem", action="store_true")
     idx.add_argument("--ascii-fold", action="store_true")
+    idx.add_argument("--examples", help="JSONL of source quotes with example questions that should find them")
     add_model(idx)
     for name in ("search", "evaluate", "offline-check"):
         cmd = sub.add_parser(name)
@@ -82,7 +83,8 @@ def main(argv=None):
             result = {"articles": len(payload["articles"]), "passages": len(payload["chunks"]), "output": args.output}
         elif args.command == "index":
             encoder = None if args.lexical_only else Encoder(args.model, args.backend, args.onnx_file)
-            result = build_index(json.loads(Path(args.prepared).read_text()), args.output, encoder, args.stem, args.ascii_fold)
+            examples = read_jsonl(args.examples) if args.examples else None
+            result = build_index(json.loads(Path(args.prepared).read_text()), args.output, encoder, args.stem, args.ascii_fold, examples)
         elif args.command == "compare":
             result = compare(args.left, args.right)
         else:
@@ -113,7 +115,7 @@ def main(argv=None):
                 if not args.json:
                     if not result["accepted"]:
                         print("Bu koleksiyonda yeterli bir yanıt bulunamadı.")
-                    for i, hit in enumerate(result["articles"], 1):
+                    for i, hit in enumerate(result["excerpts"], 1):
                         print(f"\n{i}. {hit['title']} [{hit['article_id']}] score={hit['score']:.4f}\n{hit['text']}\n")
                     print(f"Search: {result['latency_ms']:.1f} ms")
                     return 0

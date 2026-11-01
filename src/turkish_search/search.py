@@ -8,8 +8,10 @@ import sqlite3
 import tempfile
 import time
 import numpy as np
-from .data import fingerprint, save_json
+from .data import attach_examples, fingerprint, save_json
 from .text import analyze
+
+EXCERPTS_PER_ARTICLE = 2
 
 
 class BM25:
@@ -33,13 +35,14 @@ class BM25:
         return scores
 
 
-def build_index(prepared, destination, encoder=None, stem=False, ascii_fold=False):
+def build_index(prepared, destination, encoder=None, stem=False, ascii_fold=False, examples=None):
     expected = prepared.get("fingerprint")
     if expected != fingerprint({k: v for k, v in prepared.items() if k != "fingerprint"}):
         raise ValueError("Prepared corpus fingerprint mismatch; rerun prepare")
     destination = Path(destination)
     if destination.exists():
         raise ValueError("Index already exists; choose a new directory for each experiment")
+    attached = attach_examples(prepared, examples or [])
     destination.parent.mkdir(parents=True, exist_ok=True)
     temporary = Path(tempfile.mkdtemp(prefix=".index-", dir=destination.parent))
     try:
@@ -50,9 +53,13 @@ def build_index(prepared, destination, encoder=None, stem=False, ascii_fold=Fals
                 (a["article_id"], json.dumps(a, ensure_ascii=False)) for a in prepared["articles"]])
             db.executemany("INSERT INTO chunks VALUES (?, ?)", [
                 (i, json.dumps(c, ensure_ascii=False)) for i, c in enumerate(prepared["chunks"])])
+            db.execute("CREATE TABLE examples (position INTEGER PRIMARY KEY, chunk INTEGER NOT NULL, question TEXT NOT NULL)")
+            db.executemany("INSERT INTO examples VALUES (?, ?, ?)", [
+                (i, e["chunk"], e["question"]) for i, e in enumerate(attached)])
         manifest = {"schema": 1, "corpus_fingerprint": expected, "chunking": prepared["config"],
                     "articles": len(prepared["articles"]), "passages": len(prepared["chunks"]),
-                    "stem": stem, "ascii_fold": ascii_fold, "model": None}
+                    "stem": stem, "ascii_fold": ascii_fold, "model": None,
+                    "examples": len(attached), "examples_fingerprint": fingerprint(attached)}
         if encoder is not None:
             vectors = encoder.encode([c["embedding_text"] for c in prepared["chunks"]], "passage")
             if vectors.ndim != 2 or vectors.shape[0] != len(prepared["chunks"]) or not np.isfinite(vectors).all():
@@ -61,6 +68,9 @@ def build_index(prepared, destination, encoder=None, stem=False, ascii_fold=Fals
             if not np.allclose(norms, 1, atol=.001):
                 raise ValueError("Encoder must return normalized embeddings")
             np.save(temporary / "vectors.npy", vectors, allow_pickle=False)
+            if attached:
+                # Questions are compared with questions, so both sides use the query role.
+                np.save(temporary / "example_vectors.npy", encoder.encode([e["question"] for e in attached], "query"), allow_pickle=False)
             manifest["model"] = {"fingerprint": encoder.fingerprint, "backend": encoder.backend,
                                  "onnx_file": encoder.onnx_file, "dimensions": vectors.shape[1]}
         manifest["index_fingerprint"] = fingerprint(manifest)
@@ -95,6 +105,7 @@ class Searcher:
         with sqlite3.connect(f"file:{(self.directory / 'corpus.sqlite').resolve().as_posix()}?mode=ro", uri=True) as db:
             self.articles = {aid: json.loads(p) for aid, p in db.execute("SELECT article_id, payload FROM articles")}
             self.chunks = [json.loads(p) for _, p in db.execute("SELECT position, payload FROM chunks ORDER BY position")]
+            self.examples = [(c, q) for c, q in db.execute("SELECT chunk, question FROM examples ORDER BY position")] if self.manifest.get("examples") else []
         self.encoder = encoder
         model = self.manifest["model"]
         self.vectors = None
@@ -104,8 +115,13 @@ class Searcher:
             self.vectors = np.load(self.directory / "vectors.npy", mmap_mode="r", allow_pickle=False)
             if self.vectors.shape != (len(self.chunks), model["dimensions"]):
                 raise ValueError("Embedding matrix shape does not match index")
-        self.bm25 = BM25([analyze(c["embedding_text"], self.manifest["stem"], self.manifest["ascii_fold"])
-                          for c in self.chunks], self.manifest["stem"], self.manifest["ascii_fold"])
+            if self.examples:
+                self.example_vectors = np.load(self.directory / "example_vectors.npy", mmap_mode="r", allow_pickle=False)
+        lexical = [c["embedding_text"] for c in self.chunks]
+        for chunk, question in self.examples:
+            lexical[chunk] += "\n" + question
+        self.bm25 = BM25([analyze(t, self.manifest["stem"], self.manifest["ascii_fold"]) for t in lexical],
+                         self.manifest["stem"], self.manifest["ascii_fold"])
         self.load_ms = (time.perf_counter() - start) * 1000
 
     def search(self, query, method="dense", top_k=3, candidates=50, min_dense_score=None):
@@ -124,6 +140,13 @@ class Searcher:
                 raise ValueError("Dense/hybrid search requires a local model and a dense index")
             query_vector = self.encoder.encode([query], "query")[0]
             dense = self.vectors @ query_vector
+            matched = {}
+            if self.examples:
+                # A passage scores as its own text or its closest example question, whichever is nearer.
+                for (chunk, question), score in zip(self.examples, self.example_vectors @ query_vector):
+                    if score > dense[chunk]:
+                        dense[chunk] = score
+                        matched[chunk] = question
         lexical = self.bm25.score(query) if method != "dense" else None
         if method == "dense":
             ranking, scores = ordered(dense), dense
@@ -131,19 +154,24 @@ class Searcher:
             ranking, scores = ordered(lexical, True), lexical
         else:
             ranking, scores = fuse(ordered(dense), ordered(lexical, True), candidates)
-        passages = []
-        articles, seen = [], set()
+        passages, articles, excerpts = [], [], []
+        shown = Counter()
         for index in ranking:
             if min_dense_score is not None and float(dense[index]) < min_dense_score:
                 continue
             chunk = self.chunks[index]
             result = {**chunk, "score": float(scores[index]),
-                      "dense_score": None if dense is None else float(dense[index])}
+                      "dense_score": None if dense is None else float(dense[index]),
+                      "matched_question": None if dense is None else matched.get(index),
+                      "source": self.articles[chunk["article_id"]].get("source", "")}
             if len(passages) < max(candidates, 20):
                 passages.append(result)
-            if chunk["article_id"] not in seen:
-                seen.add(chunk["article_id"])
-                if len(articles) < top_k:
-                    articles.append({**result, "source": self.articles[chunk["article_id"]].get("source", "")})
-        return {"accepted": bool(articles), "articles": articles, "passages": passages,
+            article_id = chunk["article_id"]
+            if article_id not in shown and len(articles) < top_k:
+                articles.append(result)
+            # An article's best passage can be the wrong section, so keep a second one on screen.
+            if shown[article_id] < EXCERPTS_PER_ARTICLE and (article_id in shown or len(shown) < top_k):
+                excerpts.append(result)
+                shown[article_id] += 1
+        return {"accepted": bool(articles), "articles": articles, "excerpts": excerpts, "passages": passages,
                 "latency_ms": (time.perf_counter() - start) * 1000}
