@@ -46,6 +46,69 @@ tr-search search --index indexes/lexical --method bm25 'kütüphane üyeliği'
 
 `--lexical-only` preparation counts regex word/punctuation units, **not E5 tokens**. For fair model comparisons use the same model-tokenized prepared file for dense and BM25 indexes. BM25 is implemented locally with positive IDF, `k1=1.5`, `b=0.75`, no stopword removal, optional Snowball Turkish stemming, optional Turkish ASCII folding. Exact-name apostrophe suffixes are removed in the lexical branch. Stemmed/folded text is never sent to E5.
 
+## Latest test results
+
+Measured on 2026-11-01 with E5-small and hybrid search, on 39 real Turkish articles from AFAD, Türk Kızılayı, AKUT, TTB, the Turkish Psychiatric Association and a WHO-based guide, split into 386 passages, plus 343 example questions (662 with versions lacking Turkish letters).
+
+**These results can't be reproduced from this repository.** The articles and example questions stay on the author's machine because their reuse rights are unconfirmed. One AI wrote the questions and judged the results, and no Turkish speaker or medical expert has reviewed them, so real users may do worse. See the [first evaluation](docs/real-source-evaluation-2026-11.md) for the earlier baseline.
+
+### Accuracy on held-out questions
+
+Each question set was locked before the run. Ranges are 95% bootstrap intervals.
+
+| Measure | 44 questions, no example questions | 44 questions, with example questions | 40 questions, with example questions |
+|---|---|---|---:|
+| Labeled answer on screen (3 articles, up to 2 passages each) | 59% (26) | **89% (39)** [77–98] | **98% (39)** [90–100] |
+| Right article ranked first | 57% (25) | 84% (37) [73–93] | 95% (38) [88–100] |
+| Right article in top 3 | 80% (35) | 98% (43) [91–100] | 100% (40) |
+| Labeled answer in first excerpt | 27% (12) | 66% (29) [52–80] | 80% (32) [68–93] |
+| Unanswerable questions that still get a result | 10 of 10 | 10 of 10 | 30 of 30 |
+
+The same author wrote the example questions and both sets, and wrote the 40-question set after the example questions existed, so the third column is the most likely to flatter. On casual wording in the 44-question set, answers on screen rose from 2 to 10 of 13.
+
+Search always returns results for real questions, so it also answers when the articles have nothing on the topic. For example, "Doğum başladı" returns earthquake advice. Don't treat a result as proof that the answer is relevant.
+
+### Coverage of emergency questions
+
+105 questions were written from emergency needs rather than from the articles, then judged by reading the results. The "after" column was judged just before the last 6 example questions were added.
+
+| Measure | First evaluation | After cleaning, new sources and example questions |
+|---|---|---|
+| Direct answer exists | 48 | 58 |
+| Only partial guidance | 27 | 28 |
+| Nothing usable | 30 | 19 |
+| Direct answers shown on screen | 32 of 48 | 54 of 58 |
+
+Life-threatening topics with nothing usable: thirst under rubble, giving water to someone just rescued, lifting weight off a crushed limb, stroke, bleeding in pregnancy, childbirth, keeping a newborn warm, generators and self-harm.
+
+### Small local models
+
+| Model | Use | Answer on screen (44 questions) | Result |
+|---|---|---:|---|
+| Example questions only | Baseline | 39 | Kept |
+| Qwen 0.5B | Rewording questions | 34 | Rejected: it also changed meanings, such as "100 gram parasetamol" |
+| Qwen 0.5B, original and reworded question | Matching | 40 | Rejected: within noise and about 1.7 s per question on the test Mac |
+| modernbert-tr-reranker | Re-sorting results | 33 | Not adopted: it ignores the example questions |
+| mMiniLMv2 reranker | Re-sorting results | 29 | Not adopted |
+
+Without example questions, modernbert-tr-reranker raised answers on screen from 26 to 30. Rewriting and rerankers ran at full precision, so their speed isn't a phone figure.
+
+### Speed and size
+
+Measured on an Apple M1 Mac with two threads and PyTorch. No phone has been tested.
+
+| Measure | Result |
+|---|---:|
+| Warm search, P50 / P95 | 18 / 32 ms |
+| Cold start, one search | 6.2 s |
+| Peak memory footprint | 591 MB |
+| Index | 2.5 MB |
+| Model, full precision | 466 MB |
+
+### Automated tests
+
+`pytest -q`: 17 passed, 1 skipped. The skipped test needs a local model. These tests check behavior, not search accuracy.
+
 ## Evaluate and compare
 
 Use the same index and questions to isolate the retrieval-method change:
