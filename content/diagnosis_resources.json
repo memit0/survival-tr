@@ -1,0 +1,64 @@
+{
+  "_note": "TEST ONLY. Hand-drafted from general medical knowledge, not checked against an official source. Not clinician-reviewed. Used to test RAG diagnosis in private testing. Never for release.",
+  "test_only": true,
+  "pack_date": "2026-10-31",
+  "reviewed_by": null,
+  "resources": [
+    {"id": "ezilme", "title": "Ezilme sendromu", "severity": "critical", "required": ["S3"], "sentences": {
+      "S1": "Uzun süre ağır yük altında kalan bir uzuv kurtarıldıktan sonra şişme, güçsüzlük ve koyu renkli idrar ezilme sendromunu düşündürebilir.",
+      "S2": "Ezilme sendromu böbreklere zarar verebilir ve hayati tehlike oluşturabilir.",
+      "S3": "Hemen 112'yi arayın veya sağlık ekibine ulaşın."}},
+    {"id": "kafa-travmasi", "title": "Ağır kafa travması", "severity": "critical", "required": ["S3"], "sentences": {
+      "S1": "Başa darbe aldıktan sonra tekrarlayan kusma, aşırı uyku hali veya zor uyanma beyin yaralanmasını düşündürebilir.",
+      "S2": "Bilinç bulanıklığı veya şiddetlenen baş ağrısı da tehlike işaretidir.",
+      "S3": "Hemen 112'yi arayın ve kişiyi yalnız bırakmayın."}},
+    {"id": "karbon-monoksit", "title": "Karbon monoksit zehirlenmesi", "severity": "critical", "required": ["S2", "S3"], "sentences": {
+      "S1": "Kapalı alanda jeneratör veya yakıtlı ısıtıcı kullanılırken birkaç kişide baş ağrısı, baş dönmesi ve bulantı başlaması karbon monoksit zehirlenmesini düşündürebilir.",
+      "S2": "Herkesi hemen temiz havaya çıkarın.",
+      "S3": "112'yi arayın ve yetkililer izin vermeden içeri dönmeyin."}},
+    {"id": "kalp-krizi", "title": "Kalp krizi", "severity": "critical", "required": ["S2"], "sentences": {
+      "S1": "Göğüste baskı veya ağrı, kola ya da çeneye yayılan ağrı ve soğuk terleme kalp krizini düşündürebilir.",
+      "S2": "Hemen 112'yi arayın ve kişiyi dinlendirin.",
+      "S3": "Kişi bilincini kaybeder ve normal nefes almazsa göğüs basısına başlayın."}},
+    {"id": "inme", "title": "İnme", "severity": "critical", "required": ["S2"], "sentences": {
+      "S1": "Yüzün bir tarafında düşme, bir kolda güçsüzlük ve ani konuşma bozukluğu inmeyi düşündürebilir.",
+      "S2": "Belirtiler geçse bile hemen 112'yi arayın.",
+      "S3": "Belirtilerin başladığı zamanı not edin ve kişiye yiyecek veya içecek vermeyin."}},
+    {"id": "dusuk-seker", "title": "Düşük kan şekeri", "severity": "critical", "required": ["S3"], "sentences": {
+      "S1": "Şeker hastası birinde yemek atlama sonrası terleme, titreme ve anlamsız konuşma düşük kan şekerini düşündürebilir.",
+      "S2": "Kişi uyanık ve yutabiliyorsa şekerli bir içecek verin.",
+      "S3": "Bilinci bulanıksa ağzından bir şey vermeyin ve hemen 112'yi arayın."}},
+    {"id": "hipotermi", "title": "Hipotermi", "severity": "critical", "required": ["S3"], "sentences": {
+      "S1": "Soğukta kalan kişide önce titreme, ardından titremenin durması ve zihin karışıklığı ağır hipotermiyi düşündürebilir.",
+      "S2": "Kişiyi soğuktan uzaklaştırın, ıslak giysilerini çıkarın ve kuru battaniyelerle sarın.",
+      "S3": "Hemen 112'yi arayın."}},
+    {"id": "omurga", "title": "Omurga yaralanması", "severity": "critical", "required": ["S2", "S3"], "sentences": {
+      "S1": "Düşme veya darbe sonrası boyun ya da sırt ağrısı, bacaklarda his kaybı ve hareket edememe omurga yaralanmasını düşündürebilir.",
+      "S2": "Yakın bir tehlike yoksa kişiyi hareket ettirmeyin ve başını sabit tutun.",
+      "S3": "Hemen 112'yi arayın."}},
+    {"id": "kirik", "title": "Kırık", "severity": "caution", "required": ["S3"], "sentences": {
+      "S1": "Darbe veya düşme sonrası şekil bozukluğu, belirgin şişlik, şiddetli ağrı ve üzerine basamama kırığı düşündürebilir.",
+      "S2": "Yaralı bölgeyi hareket ettirmeyin ve bulunduğu şekilde destekleyin.",
+      "S3": "Sağlık kontrolüne ulaşın; his kaybı veya soğuk ve solgun bir uzuv varsa 112'yi arayın."}},
+    {"id": "yara-enfeksiyonu", "title": "Yara enfeksiyonu", "severity": "caution", "required": ["S3"], "sentences": {
+      "S1": "Yarada artan kızarıklık, şişlik, iltihap ve ateş yara enfeksiyonunu düşündürebilir.",
+      "S2": "Yarayı temiz suyla yıkayın ve temiz bir bezle örtün.",
+      "S3": "Aynı gün sağlık ekibine ulaşın; kafa karışıklığı, titreme veya çok hızlı nefes varsa 112'yi arayın."}},
+    {"id": "sivi-kaybi", "title": "Sıvı kaybı", "severity": "caution", "required": ["S3"], "sentences": {
+      "S1": "İshal, kusma veya az su içme sonrası ağız kuruluğu, baş ağrısı ve az idrara çıkma sıvı kaybını düşündürebilir.",
+      "S2": "Güvenli suyu küçük yudumlarla sık sık içirin.",
+      "S3": "Çocukta gözyaşı olmaması, aşırı uyku hali veya sıvı içememe varsa hemen sağlık ekibine ulaşın."}},
+    {"id": "burkulma", "title": "Burkulma", "severity": "general", "required": ["S3"], "sentences": {
+      "S1": "Eklemin zorlanması sonrası hafif şişlik ve ağrıya rağmen yürüyebilmek burkulmayı düşündürebilir.",
+      "S2": "Eklemi dinlendirin ve mümkünse yukarıda tutun.",
+      "S3": "Şekil bozukluğu, artan ağrı veya üzerine basamama varsa sağlık kontrolüne ulaşın."}},
+    {"id": "kucuk-yanik", "title": "Küçük yanık", "severity": "general", "required": ["S3"], "sentences": {
+      "S1": "Küçük bir alanda kızarıklık ve su kabarcığı küçük yanığı düşündürebilir.",
+      "S2": "Yanığı temiz ve serin suyla soğutun ve kabarcığı patlatmayın.",
+      "S3": "Yüz, el veya geniş bir alan yandıysa ya da nefes darlığı varsa 112'yi arayın."}},
+    {"id": "stres-panik", "title": "Stres ve panik tepkisi", "severity": "general", "required": ["S3"], "sentences": {
+      "S1": "Sarsıntı sonrası kısa süren kalp çarpıntısı, karıncalanma, kötü rüyalar ve uyku sorunu stres veya panik tepkisini düşündürebilir.",
+      "S2": "Güvenli bir yere geçin, yavaş nefes alın ve güvendiğiniz biriyle konuşun.",
+      "S3": "Göğüs ağrısı, bayılma veya kendinize zarar verme düşüncesi varsa hemen 112'yi arayın."}}
+  ]
+}

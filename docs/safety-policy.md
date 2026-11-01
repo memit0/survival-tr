@@ -90,18 +90,21 @@ Content with unclear reuse rights can't be included. AI-generated text can't cou
 ## Private prototype exception
 **Status: applies only to the Mac prototype in [decision 002](decisions/002-private-mac-prototype.md). It is not expert-approved.**
 
-This exception allows two features that the rules above forbid, so they can be tested:
-- An LLM may suggest a possible diagnosis.
+This exception allows these features that the rules above forbid, so they can be tested:
+- The LLM may answer any question, including `critical` topics, using the closest retrieved test resources.
+- The LLM may suggest a possible diagnosis from those resources.
+- The prototype has no danger check or fixed emergency cards.
 - Code may calculate a dose from a table of invented medicines.
 
 While this exception is in use:
 - Use it only with the owner and testers who know it is a test, and only with invented scenarios.
 - Don't use real medicine names or real health problems.
 - Label all medical output: "Yalnızca test. Uygulamayın."
-- Run fixed danger checks first, and show any matching 112 card above a diagnosis.
+- Keep a fixed banner on screen: "Yalnızca test. Gerçek acil durumda 112'yi arayın."
+- Show the source text with every LLM answer, and mark answers from weak matches as low match.
 - Never let the LLM calculate or change a dose.
 
-This exception doesn't change the rules for any release. Diagnosis and dose features can't leave private testing until they pass clinical and legal review, and every release requirement below still applies.
+This exception doesn't change the rules for any release. A danger check and fixed emergency cards must be back in place before anyone outside private testing uses the app. Diagnosis and dose features also need clinical and legal review, and every release requirement below still applies.
 
 ## Release requirements
 - [ ] A qualified expert has reviewed all content and fixed wording
