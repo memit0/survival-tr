@@ -1,0 +1,30 @@
+name: Offline search tests
+on:
+  push:
+    paths: ['offline-search/**', '.github/workflows/offline-search.yml']
+  pull_request:
+    paths: ['offline-search/**', '.github/workflows/offline-search.yml']
+permissions:
+  contents: read
+jobs:
+  core:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: offline-search
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e '.[dev]'
+      - run: pytest -q
+      - run: |
+          tr-search prepare --lexical-only --articles data/demo/articles.jsonl --output prepared/ci.json
+          tr-search index --lexical-only --prepared prepared/ci.json --output indexes/ci --stem --ascii-fold
+          tr-search offline-check --index indexes/ci --method bm25 'kitap iadesi' --json
+          tr-search evaluate --index indexes/ci --method bm25 --queries data/demo/queries.jsonl --output reports/ci
+      - uses: actions/upload-artifact@v4
+        with:
+          name: offline-search-demo-evaluation
+          path: offline-search/reports/ci/
