@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Survival TR Test</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <p class="banner" role="alert">Yalnızca test. Gerçek acil durumda 112'yi arayın.</p>
+  <main>
+    <h1>Survival TR</h1>
+    <p class="intro">Bu prototip uzman onaylı değildir. İçerik ve ilaçlar test amaçlıdır. Tavsiyelerini gerçek bir kişi için uygulamayın.</p>
+
+    <div class="tabs" role="tablist" aria-label="Mod">
+      <button type="button" role="tab" id="tab-ask" data-mode="ask" aria-controls="panel" aria-selected="true">Soru sor</button>
+      <button type="button" role="tab" id="tab-diagnose" data-mode="diagnose" aria-controls="panel" aria-selected="false">Olası durum</button>
+      <button type="button" role="tab" id="tab-dose" data-mode="dose" aria-controls="panel" aria-selected="false">Test dozu</button>
+    </div>
+
+    <form id="panel" role="tabpanel" aria-labelledby="tab-ask">
+      <div id="text-fields">
+        <label for="text" id="text-label">Sorunuz</label>
+        <textarea id="text" rows="4" maxlength="1000"></textarea>
+      </div>
+      <div id="dose-fields" hidden>
+        <label for="medicine">Uydurma test ilacı</label>
+        <select id="medicine"></select>
+        <label for="age">Yaş</label>
+        <input id="age" inputmode="decimal" autocomplete="off">
+        <label for="weight">Kilo (kg)</label>
+        <input id="weight" inputmode="decimal" autocomplete="off">
+      </div>
+      <button type="submit" id="submit">Gönder</button>
+    </form>
+
+    <section id="result" aria-live="polite" hidden>
+      <p id="labels"></p>
+      <div id="body"></div>
+      <ul id="warnings"></ul>
+      <div id="sources"></div>
+    </section>
+  </main>
+  <script src="/app.js"></script>
+</body>
+</html>

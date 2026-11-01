@@ -1,0 +1,60 @@
+{"set": "search", "id": "q01", "text": "deprem olurken ne yapmalıyım", "expected": "sarsinti", "top3": {"keyword": ["toplanma", "artci", "burkulma"]}}
+{"set": "search", "id": "q02", "text": "yer sallanırken içerideysem nereye saklanayım", "expected": "sarsinti", "top3": {"keyword": ["karbon-monoksit", "hasarli-bina", "icme-suyu"]}}
+{"set": "search", "id": "q03", "text": "deprem aninda asansore binilir mi", "expected": "sarsinti", "top3": {"keyword": ["sarsinti", "hasarli-bina", "artci"]}}
+{"set": "search", "id": "q04", "text": "deprem sirasinda arabadayim ne yapayim", "expected": "sarsinti", "top3": {"keyword": ["sarsinti", "artci", "toplanma"]}}
+{"set": "search", "id": "q05", "text": "ana depremden sonra tekrar sallanabilir mi", "expected": "artci", "top3": {"keyword": ["artci", "toplanma", "kafa-travmasi"]}}
+{"set": "search", "id": "q06", "text": "artci deprem olursa disari kosmali miyim", "expected": "artci", "top3": {"keyword": ["artci", "sarsinti", "toplanma"]}}
+{"set": "search", "id": "q07", "text": "evimin duvarında çatlak var içeri girebilir miyim", "expected": "hasarli-bina", "top3": {"keyword": ["hasarli-bina", "hipotermi", "sarsinti"]}}
+{"set": "search", "id": "q08", "text": "eşyalarımı almak için eve dönsem olur mu", "expected": "hasarli-bina", "top3": {"keyword": ["hasarli-bina", "sarsinti", "burkulma"]}}
+{"set": "search", "id": "q09", "text": "yaralı birini kaldırmalı mıyım", "expected": "yarali-tasima", "top3": {"keyword": ["kafa-travmasi", "yarali-tasima", "nefes"]}}
+{"set": "search", "id": "q10", "text": "boynu incinmiş olabilir yerinden oynatayım mı", "expected": "yarali-tasima", "top3": {"keyword": ["sarsinti", "yarali-tasima", "artci"]}}
+{"set": "search", "id": "q11", "text": "musluktan akan su içilir mi", "expected": "icme-suyu", "top3": {"keyword": ["icme-suyu", "hipotermi", "sivi-kaybi"]}}
+{"set": "search", "id": "q12", "text": "suyu ne kadar kaynatmam lazım", "expected": "icme-suyu", "top3": {"keyword": ["icme-suyu", "kucuk-yanik", "yara-enfeksiyonu"]}}
+{"set": "search", "id": "q13", "text": "ailemle nerede bulusalim", "expected": "toplanma", "top3": {"keyword": ["toplanma", "karbon-monoksit", "kalp-krizi"]}}
+{"set": "search", "id": "q14", "text": "telefon çekmiyor yakınlarıma nasıl haber vereyim", "expected": "toplanma", "top3": {"keyword": ["toplanma", "enkaz", "gaz"]}}
+{"set": "search", "id": "q15", "text": "doğal gaz vanasını kapatmalı mıyım", "expected": "gaz", "top3": {"keyword": ["gaz", "kucuk-yanik", "icme-suyu"]}}
+{"set": "search", "id": "q16", "text": "sargı bezi kanla doldu çıkarayım mı", "expected": "kanama", "top3": {"keyword": ["kanama", "dusuk-seker", "hasarli-bina"]}}
+{"set": "search", "id": "r01", "text": "kolum çok kanıyor durmuyor", "expected": "kanama", "top3": {"keyword": ["sarsinti", "dusuk-seker", "hipotermi"]}}
+{"set": "search", "id": "r02", "text": "enkaz altında kaldım", "expected": "enkaz", "top3": {"keyword": ["enkaz", "ezilme", "sarsinti"]}}
+{"set": "search", "id": "r03", "text": "annem gocuk altinda sesi geliyor", "expected": "enkaz", "top3": {"keyword": ["enkaz", "sarsinti", "yarali-tasima"]}}
+{"set": "search", "id": "r04", "text": "BABAM NEFES ALMIYOR", "expected": "nefes", "top3": {"keyword": ["nefes", "kucuk-yanik", "kalp-krizi"]}}
+{"set": "search", "id": "r05", "text": "sanırım kalbi durdu", "expected": "nefes", "top3": {"keyword": ["hasarli-bina", "sarsinti", "gaz"]}}
+{"set": "search", "id": "r06", "text": "evde gaz kokusu var", "expected": "gaz", "top3": {"keyword": ["gaz", "enkaz", "sivi-kaybi"]}}
+{"set": "search", "id": "r07", "text": "su an deprem oluyor", "expected": "sarsinti", "top3": {"keyword": ["toplanma", "artci", "sarsinti"]}}
+{"set": "search", "id": "o01", "text": "kek nasıl yapılır", "expected": null, "top3": {"keyword": ["gaz", "nefes", "hipotermi"]}}
+{"set": "search", "id": "o02", "text": "ankaranın nüfusu kaç", "expected": null, "top3": {"keyword": ["kanama", "karbon-monoksit", "enkaz"]}}
+{"set": "search", "id": "o03", "text": "sel gelirse ne yapmalıyım", "expected": null, "top3": {"keyword": ["nefes", "gaz", "yarali-tasima"]}}
+{"set": "search", "id": "o04", "text": "yılan soktu ne yapayım", "expected": null, "top3": {"keyword": ["kalp-krizi", "artci", "toplanma"]}}
+{"set": "search", "id": "l01", "text": "şu an en yakın barınak nerede", "expected": null, "top3": {"keyword": ["karbon-monoksit", "gaz", "omurga"]}}
+{"set": "search", "id": "l02", "text": "köprü yolu açık mı", "expected": null, "top3": {"keyword": ["sarsinti", "gaz", "artci"]}}
+{"set": "search", "id": "l03", "text": "yarın artçı deprem olacak mı", "expected": null, "top3": {"keyword": ["artci", "toplanma", "sarsinti"]}}
+{"set": "diagnosis", "id": "d01", "text": "Bacağım 6 saat enkaz altında kaldı. Şimdi çıkarıldım ama bacağım şişti ve idrarım koyu renkli.", "expected": "ezilme", "top3": {"keyword": ["ezilme", "enkaz", "kanama"]}}
+{"set": "diagnosis", "id": "d02", "text": "Göğsüme beton düştü. Çok hızlı nefes alıyorum, nefesim yetmiyor ve dudaklarım morardı.", "expected": null, "top3": {"keyword": ["nefes", "yara-enfeksiyonu", "sarsinti"]}}
+{"set": "diagnosis", "id": "d03", "text": "Kişi çok kan kaybetti. Cildi soluk ve soğuk, nabzı çok hızlı ve kafası karışık.", "expected": null, "top3": {"keyword": ["yara-enfeksiyonu", "kirik", "kalp-krizi"]}}
+{"set": "diagnosis", "id": "d04", "text": "Başına tuğla düştü. Bir süre sonra iki kez kustu ve şimdi uyumak istiyor, zor uyanıyor.", "expected": "kafa-travmasi", "top3": {"keyword": ["gaz", "enkaz", "kanama"]}}
+{"set": "diagnosis", "id": "d05", "text": "Çadırda jeneratör çalıştırdık. Hepimizde baş ağrısı, baş dönmesi ve mide bulantısı başladı.", "expected": "karbon-monoksit", "top3": {"keyword": ["karbon-monoksit", "inme", "stres-panik"]}}
+{"set": "diagnosis", "id": "d06", "text": "Yangından çıktı. Yüzünde yanıklar var, sesi kısıldı ve nefes alırken hırıltı geliyor.", "expected": null, "top3": {"keyword": ["karbon-monoksit", "nefes", "yarali-tasima"]}}
+{"set": "diagnosis", "id": "d07", "text": "Göğsümde baskı var, ağrı sol koluma yayılıyor ve soğuk soğuk terliyorum.", "expected": "kalp-krizi", "top3": {"keyword": ["kalp-krizi", "nefes", "kirik"]}}
+{"set": "diagnosis", "id": "d08", "text": "Yüzünün bir tarafı aniden düştü, konuşması bozuldu ve bir kolunu kaldıramıyor.", "expected": "inme", "top3": {"keyword": ["inme", "ezilme", "hasarli-bina"]}}
+{"set": "diagnosis", "id": "d09", "text": "Şeker hastası, bir gündür yemek yemedi. Terliyor, titriyor ve anlamsız konuşuyor.", "expected": "dusuk-seker", "top3": {"keyword": ["dusuk-seker", "nefes", "hasarli-bina"]}}
+{"set": "diagnosis", "id": "d10", "text": "Gece dışarıda kaldı. Önce çok titredi, sonra titremesi durdu ve kafası karıştı.", "expected": "hipotermi", "top3": {"keyword": ["hipotermi", "yara-enfeksiyonu", "sarsinti"]}}
+{"set": "diagnosis", "id": "d11", "text": "Karnına kolon çarptı. Karnı sertleşti, başı dönüyor ve yüzü soldu.", "expected": null, "top3": {"keyword": ["hasarli-bina", "nefes", "inme"]}}
+{"set": "diagnosis", "id": "d12", "text": "34 haftalık hamile. Düştükten sonra karnı ağrıyor ve kanaması başladı.", "expected": null, "top3": {"keyword": ["kanama", "burkulma", "inme"]}}
+{"set": "diagnosis", "id": "d13", "text": "Yüksekten düştü. Boynu çok ağrıyor ve iki bacağını hissetmiyor.", "expected": "omurga", "top3": {"keyword": ["sarsinti", "omurga", "gaz"]}}
+{"set": "diagnosis", "id": "d14", "text": "Üç gün önce ayağına çivi battı. Şimdi çenesi kilitleniyor ve boyun kasları kasılıyor.", "expected": null, "top3": {"keyword": ["hipotermi", "sarsinti", "karbon-monoksit"]}}
+{"set": "diagnosis", "id": "d15", "text": "Toz yuttuktan sonra hışıltılı nefes alıyorum ve astım spreyim kalmadı.", "expected": null, "top3": {"keyword": ["nefes", "hipotermi", "yara-enfeksiyonu"]}}
+{"set": "diagnosis", "id": "d16", "text": "Bacağım eğri duruyor, çok şişti ve üzerine basamıyorum. Ayağımı hissediyorum.", "expected": "kirik", "top3": {"keyword": ["nefes", "burkulma", "kirik"]}}
+{"set": "diagnosis", "id": "d17", "text": "Üç günlük kirli yarada kızarıklık ve iltihap var, ateşim de yükseldi.", "expected": "yara-enfeksiyonu", "top3": {"keyword": ["yara-enfeksiyonu", "kucuk-yanik", "ezilme"]}}
+{"set": "diagnosis", "id": "d18", "text": "Çocuğumun iki gündür ishali var. Ağzı kuru ve ağlarken gözyaşı gelmiyor.", "expected": "sivi-kaybi", "top3": {"keyword": ["sivi-kaybi", "enkaz", "nefes"]}}
+{"set": "diagnosis", "id": "d19", "text": "Kamptaki birçok kişi kuyu suyu içtikten sonra ishal oldu ve kusuyor.", "expected": null, "top3": {"keyword": ["sivi-kaybi", "artci", "icme-suyu"]}}
+{"set": "diagnosis", "id": "d20", "text": "Düşerken elimin üstüne yığıldım. Bileğim şişti, hareket ettirince çok ağrıyor.", "expected": "kirik", "top3": {"keyword": ["nefes", "kirik", "yarali-tasima"]}}
+{"set": "diagnosis", "id": "d21", "text": "Çaydanlık koluma değdi. Küçük bir su kabarcığı oldu, başka şikayetim yok.", "expected": "kucuk-yanik", "top3": {"keyword": ["kucuk-yanik", "nefes", "sivi-kaybi"]}}
+{"set": "diagnosis", "id": "d22", "text": "Artçıdan sonra kalbim hızlandı, ellerim karıncalandı. Yaralanmam yok ve birkaç dakikada geçti.", "expected": "stres-panik", "top3": {"keyword": ["artci", "nefes", "karbon-monoksit"]}}
+{"set": "diagnosis", "id": "d23", "text": "Dizimde küçük bir sıyrık var. Kanaması durdu, temizledim.", "expected": null, "top3": {"keyword": ["kucuk-yanik", "kanama", "yara-enfeksiyonu"]}}
+{"set": "diagnosis", "id": "d24", "text": "Ayağım hafif burkuldu. Biraz şiş ama rahat yürüyebiliyorum.", "expected": "burkulma", "top3": {"keyword": ["burkulma", "sarsinti", "toplanma"]}}
+{"set": "diagnosis", "id": "d25", "text": "Kolumda düşmeden kalma küçük bir morluk var. Hareket ettirebiliyorum.", "expected": null, "top3": {"keyword": ["yarali-tasima", "omurga", "enkaz"]}}
+{"set": "diagnosis", "id": "d26", "text": "Gözüme toz kaçtı. Temiz suyla yıkadım, biraz kızarık ama iyi görüyorum.", "expected": null, "top3": {"keyword": ["yara-enfeksiyonu", "kucuk-yanik", "toplanma"]}}
+{"set": "diagnosis", "id": "d27", "text": "Çadırda iki gündür burnum akıyor ve biraz öksürüyorum. Ateşim yok, nefesim rahat.", "expected": null, "top3": {"keyword": ["enkaz", "yara-enfeksiyonu", "sarsinti"]}}
+{"set": "diagnosis", "id": "d28", "text": "Depremden beri kötü rüyalar görüyorum ve uyuyamıyorum, ama kendime zarar verme düşüncem yok.", "expected": "stres-panik", "top3": {"keyword": ["toplanma", "stres-panik", "artci"]}}
+{"set": "diagnosis", "id": "d29", "text": "Bütün gün az su içtim. Hafif başım ağrıyor, su içince biraz düzeldi.", "expected": "sivi-kaybi", "top3": {"keyword": ["burkulma", "enkaz", "nefes"]}}
+{"set": "diagnosis", "id": "d30", "text": "Çok yürüdüm, topuğumda küçük bir su toplanması var.", "expected": null, "top3": {"keyword": ["sivi-kaybi", "toplanma", "kucuk-yanik"]}}
