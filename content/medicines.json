@@ -1,0 +1,8 @@
+{
+  "_note": "TEST ONLY. These medicines do not exist and every number is invented. Used only to test calculator logic. Never use for a real person.",
+  "medicines": [
+    {"id": "sahteril", "name": "Sahteril", "kind": "per_kg", "mg_per_kg": "10", "max_mg": "500", "min_age_years": 1, "max_age_years": 120, "min_weight_kg": "8", "max_weight_kg": "200"},
+    {"id": "denemol", "name": "Denemol", "kind": "per_kg", "mg_per_kg": "2.5", "max_mg": "100", "min_age_years": 2, "max_age_years": 120, "min_weight_kg": "10", "max_weight_kg": "200"},
+    {"id": "ornekol", "name": "Örnekol", "kind": "fixed", "fixed_mg": "100", "min_age_years": 12, "max_age_years": 120, "min_weight_kg": "40", "max_weight_kg": "200"}
+  ]
+}

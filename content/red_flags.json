@@ -1,0 +1,11 @@
+{
+  "_note": "TEST ONLY. Not reviewed by a clinician. Patterns are matched against normalized text: Turkish lowercase with Turkish letters mapped to plain letters.",
+  "red_flags": {
+    "sarsinti": ["su an deprem", "deprem oluyor", "yer sallaniyor", "bina sallaniyor"],
+    "enkaz": ["enkaz alt", "gocuk alt", "altinda kaldi", "mahsur", "sikistim", "sikisti"],
+    "kanama": ["kaniyor", "kanama durm", "kan durm", "siddetli kanama", "asiri kanama", "kan fiskir"],
+    "nefes": ["nefes almiyor", "nefes alamiyor", "solumuyor", "kalbi durdu", "bilinci yok", "tepki vermiyor"],
+    "gaz": ["gaz kok", "gaz kac"]
+  },
+  "live_info": ["su an", "acik mi", "olacak mi", "kapali mi"]
+}

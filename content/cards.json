@@ -1,0 +1,64 @@
+{
+  "_note": "TEST ONLY. Hand-drafted from general disaster-preparedness knowledge, not copied from or checked against an official source. Not expert-reviewed. Never for release.",
+  "test_only": true,
+  "pack_date": "2026-10-31",
+  "reviewed_by": null,
+  "cards": [
+    {"id": "sarsinti", "title": "Deprem sırasında", "severity": "critical", "required": ["S1", "S2"], "sentences": {
+      "S1": "Sarsıntı başlarsa hemen yere çökün, başınızı ve boynunuzu kollarınızla koruyun.",
+      "S2": "Sağlam bir masa varsa altına girin ve sarsıntı bitene kadar ayağına tutunun.",
+      "S3": "Sarsıntı sırasında dışarı koşmayın, asansör veya merdiven kullanmayın.",
+      "S4": "Camlardan, dolaplardan ve düşebilecek eşyalardan uzak durun.",
+      "S5": "Dışarıdaysanız binalardan, direklerden ve elektrik hatlarından uzaklaşın.",
+      "S6": "Araç kullanıyorsanız köprülerden uzak, açık bir yerde durun ve sarsıntı bitene kadar araçta kalın."}},
+    {"id": "enkaz", "title": "Enkaz altında kalırsanız", "severity": "critical", "required": ["S1", "S3"], "sentences": {
+      "S1": "Kibrit veya çakmak yakmayın, çünkü ortamda gaz olabilir.",
+      "S2": "Ağzınızı ve burnunuzu bir bezle örtün.",
+      "S3": "Toz yutmamak için sürekli bağırmayın; yerinizi belli etmek için boruya veya duvara vurun.",
+      "S4": "Gereksiz hareket etmeyin ve üzerinizdeki yükü zorlamayın.",
+      "S5": "Telefonunuz çalışıyorsa pilini koruyun ve 112'ye konumunuzu bildirmeyi deneyin."}},
+    {"id": "artci", "title": "Artçı sarsıntılar", "severity": "critical", "required": ["S2"], "sentences": {
+      "S1": "Artçı sarsıntılar ana depremden dakikalar, günler veya aylar sonra olabilir.",
+      "S2": "Her artçı sarsıntıda yeniden yere çökün, başınızı koruyun ve sarsıntı bitene kadar tutunun.",
+      "S3": "Artçı sarsıntılar hasarlı binaları yıkabilir, bu yüzden hasarlı binalara girmeyin.",
+      "S4": "Sarsıntı bittikten sonra açık ve güvenli bir alana geçin."}},
+    {"id": "kanama", "title": "Ağır kanama", "severity": "critical", "required": ["S1", "S2"], "sentences": {
+      "S1": "Temiz bir bezle yaranın üzerine doğrudan ve sıkıca bastırın.",
+      "S2": "Hemen 112'yi arayın veya başka birine arattırın.",
+      "S3": "Bez kanla dolarsa çıkarmayın, üstüne yeni bir bez ekleyip bastırmaya devam edin.",
+      "S4": "Yardım gelene kadar bastırmayı bırakmayın.",
+      "S5": "Yaraya saplanmış bir cismi çıkarmayın."}},
+    {"id": "nefes", "title": "Nefes almayan kişi", "severity": "critical", "required": ["S1", "S2"], "sentences": {
+      "S1": "Önce ortamın güvenli olduğunu kontrol edin ve kişinin tepki verip vermediğine bakın.",
+      "S2": "Hemen 112'yi arayın veya başka birine arattırın.",
+      "S3": "Yetişkin normal nefes almıyorsa göğsün ortasına sert ve hızlı bastırın.",
+      "S4": "Dakikada 100 ile 120 bası yapın ve yardım gelene kadar durmayın.",
+      "S5": "Bu kart bebekler için geçerli değildir."}},
+    {"id": "gaz", "title": "Gaz kokusu", "severity": "critical", "required": ["S1", "S3"], "sentences": {
+      "S1": "Gaz kokusu alırsanız kibrit veya çakmak yakmayın, elektrik düğmelerine dokunmayın.",
+      "S2": "Kapı ve pencereleri açın.",
+      "S3": "Vanaya güvenle ulaşabiliyorsanız doğal gaz vanasını kapatın ve binadan hemen çıkın.",
+      "S4": "Binadan çıktıktan sonra 112'yi arayın.",
+      "S5": "Yetkililer güvenli demeden ocağı veya kombiyi kullanmayın."}},
+    {"id": "hasarli-bina", "title": "Hasarlı binaya dönüş", "severity": "caution", "required": ["S1"], "sentences": {
+      "S1": "Çatlak, eğilme veya başka bir hasar gördüğünüz binaya girmeyin.",
+      "S2": "Bina yetkililer tarafından kontrol edilene kadar eşya almak için bile içeri dönmeyin.",
+      "S3": "Duvar ve kolonlardaki hasarı yetkililere bildirin.",
+      "S4": "Binadan çıkarken asansör kullanmayın."}},
+    {"id": "yarali-tasima", "title": "Yaralıyı hareket ettirmek", "severity": "caution", "required": ["S1"], "sentences": {
+      "S1": "Yangın veya göçme gibi yakın bir tehlike yoksa yaralıyı hareket ettirmeyin.",
+      "S2": "Boyun veya sırt yaralanması olabilecek kişinin başını sabit tutun.",
+      "S3": "Yaralıyı sıcak tutun ve yanında kalın.",
+      "S4": "Bilinci kapalı kişiye yiyecek veya içecek vermeyin."}},
+    {"id": "icme-suyu", "title": "İçme suyu", "severity": "caution", "required": ["S1"], "sentences": {
+      "S1": "Şebeke suyunun güvenli olduğu duyurulana kadar musluk suyunu içmeyin.",
+      "S2": "Mümkünse kapalı şişe suyu kullanın.",
+      "S3": "Şişe suyu yoksa suyu en az 1 dakika kaynatıp soğutun.",
+      "S4": "Suyu temiz ve kapalı bir kapta saklayın."}},
+    {"id": "toplanma", "title": "Toplanma ve haberleşme", "severity": "general", "required": [], "sentences": {
+      "S1": "Depremden önce ailenizle bir toplanma alanı ve buluşma noktası belirleyin.",
+      "S2": "Hatlar yoğunsa arama yerine kısa mesaj göndermeyi deneyin.",
+      "S3": "Telefon görüşmelerini kısa tutun ve pilinizi koruyun.",
+      "S4": "Güvenli olduğunuzda yakınlarınıza durumunuzu bildirin."}}
+  ]
+}

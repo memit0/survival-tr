@@ -1,0 +1,38 @@
+{
+  "_note": "TEST DATA ONLY. Invented questions. expected_kind: approved_passage needs the card in the top 3; critical_card must reach that card; doesnt_know must not show a passage.",
+  "questions": [
+    {"id": "q01", "text": "deprem olurken ne yapmalıyım", "expected_kind": "approved_passage", "expected_card": "sarsinti", "tags": ["direct"]},
+    {"id": "q02", "text": "yer sallanırken içerideysem nereye saklanayım", "expected_kind": "approved_passage", "expected_card": "sarsinti", "tags": ["paraphrase"]},
+    {"id": "q03", "text": "deprem aninda asansore binilir mi", "expected_kind": "approved_passage", "expected_card": "sarsinti", "tags": ["no_turkish_letters", "negation"]},
+    {"id": "q04", "text": "deprem sirasinda arabadayim ne yapayim", "expected_kind": "approved_passage", "expected_card": "sarsinti", "tags": ["no_turkish_letters"]},
+    {"id": "q05", "text": "ana depremden sonra tekrar sallanabilir mi", "expected_kind": "approved_passage", "expected_card": "artci", "tags": ["paraphrase"]},
+    {"id": "q06", "text": "artci deprem olursa disari kosmali miyim", "expected_kind": "approved_passage", "expected_card": "artci", "tags": ["no_turkish_letters"]},
+    {"id": "q07", "text": "evimin duvarında çatlak var içeri girebilir miyim", "expected_kind": "approved_passage", "expected_card": "hasarli-bina", "tags": ["direct", "negation"]},
+    {"id": "q08", "text": "eşyalarımı almak için eve dönsem olur mu", "expected_kind": "approved_passage", "expected_card": "hasarli-bina", "tags": ["paraphrase", "negation"]},
+    {"id": "q09", "text": "yaralı birini kaldırmalı mıyım", "expected_kind": "approved_passage", "expected_card": "yarali-tasima", "tags": ["direct", "negation"]},
+    {"id": "q10", "text": "boynu incinmiş olabilir yerinden oynatayım mı", "expected_kind": "approved_passage", "expected_card": "yarali-tasima", "tags": ["paraphrase", "negation"]},
+    {"id": "q11", "text": "musluktan akan su içilir mi", "expected_kind": "approved_passage", "expected_card": "icme-suyu", "tags": ["direct", "negation"]},
+    {"id": "q12", "text": "suyu ne kadar kaynatmam lazım", "expected_kind": "approved_passage", "expected_card": "icme-suyu", "tags": ["direct"]},
+    {"id": "q13", "text": "ailemle nerede bulusalim", "expected_kind": "approved_passage", "expected_card": "toplanma", "tags": ["no_turkish_letters"]},
+    {"id": "q14", "text": "telefon çekmiyor yakınlarıma nasıl haber vereyim", "expected_kind": "approved_passage", "expected_card": "toplanma", "tags": ["paraphrase"]},
+    {"id": "q15", "text": "doğal gaz vanasını kapatmalı mıyım", "expected_kind": "approved_passage", "expected_card": "gaz", "tags": ["direct"]},
+    {"id": "q16", "text": "sargı bezi kanla doldu çıkarayım mı", "expected_kind": "approved_passage", "expected_card": "kanama", "tags": ["paraphrase", "negation"]},
+
+    {"id": "r01", "text": "kolum çok kanıyor durmuyor", "expected_kind": "critical_card", "expected_card": "kanama", "tags": ["red_flag"]},
+    {"id": "r02", "text": "enkaz altında kaldım", "expected_kind": "critical_card", "expected_card": "enkaz", "tags": ["red_flag"]},
+    {"id": "r03", "text": "annem gocuk altinda sesi geliyor", "expected_kind": "critical_card", "expected_card": "enkaz", "tags": ["red_flag", "no_turkish_letters"]},
+    {"id": "r04", "text": "BABAM NEFES ALMIYOR", "expected_kind": "critical_card", "expected_card": "nefes", "tags": ["red_flag", "uppercase"]},
+    {"id": "r05", "text": "sanırım kalbi durdu", "expected_kind": "critical_card", "expected_card": "nefes", "tags": ["red_flag"]},
+    {"id": "r06", "text": "evde gaz kokusu var", "expected_kind": "critical_card", "expected_card": "gaz", "tags": ["red_flag"]},
+    {"id": "r07", "text": "su an deprem oluyor", "expected_kind": "critical_card", "expected_card": "sarsinti", "tags": ["red_flag", "no_turkish_letters"]},
+
+    {"id": "o01", "text": "kek nasıl yapılır", "expected_kind": "doesnt_know", "expected_card": null, "tags": ["out_of_scope"]},
+    {"id": "o02", "text": "ankaranın nüfusu kaç", "expected_kind": "doesnt_know", "expected_card": null, "tags": ["out_of_scope"]},
+    {"id": "o03", "text": "sel gelirse ne yapmalıyım", "expected_kind": "doesnt_know", "expected_card": null, "tags": ["out_of_scope"]},
+    {"id": "o04", "text": "yılan soktu ne yapayım", "expected_kind": "doesnt_know", "expected_card": null, "tags": ["out_of_scope"]},
+
+    {"id": "l01", "text": "şu an en yakın barınak nerede", "expected_kind": "doesnt_know", "expected_card": null, "tags": ["live_info"]},
+    {"id": "l02", "text": "köprü yolu açık mı", "expected_kind": "doesnt_know", "expected_card": null, "tags": ["live_info"]},
+    {"id": "l03", "text": "yarın artçı deprem olacak mı", "expected_kind": "doesnt_know", "expected_card": null, "tags": ["live_info"]}
+  ]
+}
