@@ -1,5 +1,0 @@
-# Kumru must write 1-5 numbered steps, and each step must cite a source sentence.
-# Example: 1. [S2] Jeneratörü evden uzakta kullanın.
-root ::= "1" tail ("2" tail ("3" tail ("4" tail ("5" tail)?)?)?)?
-tail ::= ". [S" [0-9] [0-9]? "] " text "\n"
-text ::= [^\n\[\]*]{5,160}

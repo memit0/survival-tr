@@ -42,6 +42,8 @@ Full sentences were worse: they looped, added emoji and invented instructions su
 - **Design flaw found:** my round 1 example leaked into the outputs. Round 2 removed it, and round 1 is kept for the record.
 
 ## Reproduce
+These scripts were removed from the current tree; run them from commit `f0e4dab`.
+
 ```bash
 ./scripts/start_model.sh                 # in one terminal
 python3 evals/phase1/run.py              # round 1
